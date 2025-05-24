@@ -58,7 +58,7 @@ if not st.session_state.cadastro_ok:
         nome = st.text_input("Seu nome")
         idade = st.number_input("Sua idade", min_value=5, max_value=120, step=1)
         nivel = st.selectbox("Seu nível de conhecimento", ["Iniciante", "Intermediário", "Avançado"])
-        consentimento = st.checkbox("Autorizo o uso dos meus dados para fins educacionais (LGPD)")
+        consentimento = st.checkbox("Autorizo o uso dos meus dados para fins educacionais conforme a Lei Geral e Proteção de Dados (LGPD)")
         enviar = st.form_submit_button("Começar Quiz")
 
         if enviar and nome.strip() != "" and consentimento:
