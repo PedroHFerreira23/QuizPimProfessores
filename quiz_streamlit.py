@@ -68,6 +68,7 @@ if not st.session_state.cadastro_ok:
             st.session_state.pontuacao = 0
             st.session_state.cadastro_ok = True
             st.success("Cadastro realizado com sucesso!")
+            st.rerun()
         elif not consentimento:
             st.warning("Você precisa aceitar a LGPD para continuar.")
         elif nome.strip() == "":
