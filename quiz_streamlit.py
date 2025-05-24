@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st #import
 
 st.set_page_config(page_title="Quiz Segurança Digital", layout="centered")
 st.title("🔐 Quiz sobre Segurança Digital")
