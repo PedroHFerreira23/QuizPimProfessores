@@ -1,123 +1,91 @@
 import streamlit as st
 
-
+# Página principal
 st.set_page_config(page_title="Quiz Segurança Digital", layout="centered")
 
 st.title("🔐 Quiz sobre Segurança Digital")
 
-
+# Armazenamento temporário
 if "cadastro_ok" not in st.session_state:
     st.session_state.cadastro_ok = False
 if "pontuacao" not in st.session_state:
     st.session_state.pontuacao = 0
 if "etapa" not in st.session_state:
     st.session_state.etapa = 0
+if "nivel" not in st.session_state:
+    st.session_state.nivel = "Iniciante"
 
+# Banco de perguntas por nível
+perguntas_por_nivel = {
+    "Iniciante": [
+        {
+            "pergunta": "O que é uma senha segura?",
+            "alternativas": {
+                "A": "Senha com letras, números e símbolos",
+                "B": "Senha fácil como 1234",
+                "C": "Mesma senha em tudo",
+                "D": "Nome da família"
+            },
+            "correta": "A"
+        },
+        {
+            "pergunta": "Por que não clicar em links de desconhecidos?",
+            "alternativas": {
+                "A": "Vai travar o celular",
+                "B": "Pode roubar seus dados",
+                "C": "Gasta internet",
+                "D": "Deixa lento"
+            },
+            "correta": "B"
+        }
+    ],
+    "Intermediário": [
+        {
+            "pergunta": "O que significa autenticação em dois fatores (2FA)?",
+            "alternativas": {
+                "A": "Acesso com nome e CPF",
+                "B": "Verificação com dois dispositivos",
+                "C": "Confirmação dupla para login",
+                "D": "Senha digitada duas vezes"
+            },
+            "correta": "C"
+        },
+        {
+            "pergunta": "Como evitar golpes de phishing?",
+            "alternativas": {
+                "A": "Clicando rápido nos links",
+                "B": "Desconfiando de e-mails suspeitos",
+                "C": "Reenviando para amigos",
+                "D": "Usando a mesma senha em tudo"
+            },
+            "correta": "B"
+        }
+    ],
+    "Avançado": [
+        {
+            "pergunta": "O que é um certificado digital SSL?",
+            "alternativas": {
+                "A": "Protocolo de login automático",
+                "B": "Sistema de antivírus",
+                "C": "Garantia de conexão segura via HTTPS",
+                "D": "Extensão de navegador"
+            },
+            "correta": "C"
+        },
+        {
+            "pergunta": "Qual a função de um firewall?",
+            "alternativas": {
+                "A": "Aumentar a velocidade da internet",
+                "B": "Filtrar tráfego de rede e bloquear acessos maliciosos",
+                "C": "Melhorar a imagem de vídeo",
+                "D": "Acessar sites automaticamente"
+            },
+            "correta": "B"
+        }
+    ]
+}
 
-perguntas = [
-    {
-        "pergunta": "1. O que é uma senha segura?",
-        "alternativas": {
-            "A": "Senha com letras, números e símbolos diferentes",
-            "B": "Senha fácil como 1234",
-            "C": "Senha igual em todas as contas",
-            "D": "Nome da minha família"
-        },
-        "correta": "A"
-    },
-    {
-        "pergunta": "2. Por que não devemos clicar em links de e-mails ou mensagens de desconhecidos?",
-        "alternativas": {
-            "A": "Porque o celular vai travar",
-            "B": "Porque pode ser perigoso e roubar seus dados",
-            "C": "Porque vai gastar muita internet",
-            "D": "Porque o computador pode ficar lento"
-        },
-        "correta": "B"
-    },
-    {
-        "pergunta": "3. O que fazer se uma mensagem pedir seus dados bancários?",
-        "alternativas": {
-            "A": "Compartilhar com amigos",
-            "B": "Ignorar e apagar a mensagem",
-            "C": "Postar nas redes sociais",
-            "D": "Responder com os dados"
-        },
-        "correta": "B"
-    },
-    {
-        "pergunta": "4. Qual é a função de um antivírus?",
-        "alternativas": {
-            "A": "Proteger contra vírus e ameaças",
-            "B": "Apagar arquivos antigos",
-            "C": "Ajudar a encontrar senhas esquecidas",
-            "D": "Deixar vídeos mais rápidos"
-        },
-        "correta": "A"
-    },
-    {
-        "pergunta": "5. Por que não devemos compartilhar senhas?",
-        "alternativas": {
-            "A": "Outras pessoas podem acessar sua conta",
-            "B": "Pode gastar seu saldo",
-            "C": "A senha pode estragar",
-            "D": "A pessoa pode esquecer"
-        },
-        "correta": "A"
-    },
-    {
-        "pergunta": "6. O que é um golpe digital?",
-        "alternativas": {
-            "A": "Uma brincadeira online",
-            "B": "Um vídeo engraçado",
-            "C": "Forma de enganar para roubar dados ou dinheiro",
-            "D": "Uma promoção verdadeira"
-        },
-        "correta": "C"
-    },
-    {
-        "pergunta": "7. O que fazer ao usar um computador público?",
-        "alternativas": {
-            "A": "Instalar apps pessoais",
-            "B": "Usar com cuidado e sair da conta depois",
-            "C": "Salvar senhas no navegador",
-            "D": "Deixar conta conectada"
-        },
-        "correta": "B"
-    },
-    {
-        "pergunta": "8. O que é uma rede Wi-Fi aberta?",
-        "alternativas": {
-            "A": "Rede segura e protegida",
-            "B": "Internet mais rápida",
-            "C": "Rede exclusiva de bancos",
-            "D": "Rede onde qualquer um pode acessar"
-        },
-        "correta": "D"
-    },
-    {
-        "pergunta": "9. Como saber se um site é seguro para compras?",
-        "alternativas": {
-            "A": "Muitas cores chamativas",
-            "B": "Pede dados antes de mostrar produtos",
-            "C": "Preço muito barato",
-            "D": "Começa com 'https://' e tem um cadeado"
-        },
-        "correta": "D"
-    },
-    {
-        "pergunta": "10. Se alguém pede dinheiro no WhatsApp dizendo ser parente?",
-        "alternativas": {
-            "A": "Ignorar e bloquear",
-            "B": "Confirmar com a pessoa por telefone",
-            "C": "Transferir logo",
-            "D": "Mandar a mensagem para outros"
-        },
-        "correta": "B"
-    }
-]
-
-
+# Cadastro
 if not st.session_state.cadastro_ok:
     st.subheader("📋 Cadastro do Participante")
     with st.form("formulario_cadastro"):
@@ -135,12 +103,17 @@ if not st.session_state.cadastro_ok:
             else:
                 st.session_state.cadastro_ok = True
                 st.session_state.nome = nome
+                st.session_state.nivel = nivel
                 st.session_state.pontuacao = 0
                 st.session_state.etapa = 0
                 st.success("Cadastro concluído! Boa sorte no quiz 🚀")
 
+# Carregar perguntas do nível escolhido
+nivel = st.session_state.nivel
+perguntas = perguntas_por_nivel[nivel]
 
-elif st.session_state.etapa < len(perguntas):
+# Quiz
+if st.session_state.cadastro_ok and st.session_state.etapa < len(perguntas):
     atual = perguntas[st.session_state.etapa]
     st.subheader(atual["pergunta"])
     escolha = st.radio("Escolha uma alternativa:", list(atual["alternativas"].keys()), format_func=lambda x: f"{x}) {atual['alternativas'][x]}")
@@ -149,17 +122,17 @@ elif st.session_state.etapa < len(perguntas):
             st.session_state.pontuacao += 1
             st.success("✅ Resposta correta!")
         else:
-            st.error(f"❌ Resposta incorreta. A correta era ({atual['correta']}) {atual['alternativas'][atual['correta']]}")
+            st.error(f"❌ Incorreta. A correta era ({atual['correta']}) {atual['alternativas'][atual['correta']]}")
         st.session_state.etapa += 1
         st.rerun()
 
+# Resultado
+elif st.session_state.cadastro_ok and st.session_state.etapa >= len(perguntas):
+    st.success(f"🎉 {st.session_state.nome}, você finalizou o quiz!")
+    st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
 
-else:
-    st.success(f"🎉 Parabéns, {st.session_state.nome}! Você concluiu o quiz.")
-    st.write(f"Sua pontuação foi: **{st.session_state.pontuacao} de {len(perguntas)}**")
     if st.button("Refazer o quiz"):
         st.session_state.cadastro_ok = False
         st.session_state.etapa = 0
         st.session_state.pontuacao = 0
         st.rerun()
-
